@@ -20,7 +20,7 @@ public class Initialiser extends Application
 	
 	public void start(Stage primaryStage)
 	{
-		primaryStage.setTitle("Welcome");
+		primaryStage.setTitle("Lift Manager");
 		
 		primaryStage.setScene(liftManager.LiftGuiBuilder());
 		
