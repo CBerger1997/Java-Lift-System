@@ -41,7 +41,7 @@ public class LiftGUI
 					Integer floorNum = lift.getFloor();
 					for (RadioButton button : floorRadioBtns)
 					{
-						if (!btn.getText().equals(floorNum.toString()) && btn.getText().equals(button.getText()))
+						if (!btn.getText().equals(floorNum.toString()) && btn.getText().equals(button.getText()) && !lift.getUpQueue().contains(btn.getText()))
 						{
 							if (button.isSelected())
 							{
@@ -73,16 +73,22 @@ public class LiftGUI
 
 		lift.setFloor(0);
 		currentFloorText.setText("Current Floor: " + lift.getFloor());
+		currentFloorText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+
 		lift.setMoving(false);
 		isMovingText.setText(String.valueOf(lift.getIsMoving()));
 		lift.setIsUp(true);
 	}
 
-	public HBox SetupGUI()
+	public VBox SetupGUI()
 	{
 		VBox floorBtnsVBox = new VBox();
 
 		VBox floorIndicatorsVBox = new VBox();
+		
+		floorBtnsVBox.setSpacing(10);
+		
+		floorIndicatorsVBox.setSpacing(10);
 
 		for (Button button : floorBtns)
 		{
@@ -134,31 +140,38 @@ public class LiftGUI
 
 		// --------Current Floor GUI Start--------
 
-		currentFloorText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-
-		VBox combinedFloorButtonTextVBox = new VBox();
-
-		combinedFloorButtonTextVBox.setAlignment(Pos.CENTER);
-
 		HBox floorButtonsHBox = new HBox();
 
 		floorButtonsHBox.setAlignment(Pos.CENTER);
 
 		floorButtonsHBox.getChildren().addAll(floorBtnsVBox, floorIndicatorsVBox);
 
-		combinedFloorButtonTextVBox.getChildren().addAll(currentFloorText, floorButtonsHBox);
-
-		combinedFloorButtonTextVBox.setSpacing(30);
-
 		// --------Current Floor GUI End--------
 
 		HBox combinedHBox = new HBox();
 
-		combinedHBox.getChildren().addAll(combinedFloorButtonTextVBox, combinedQueueHBox);
+		combinedHBox.getChildren().addAll(floorButtonsHBox, combinedQueueHBox);
 
 		combinedHBox.setAlignment(Pos.CENTER);
+		
+		VBox combinedFloorButtonTextVBox = new VBox();
 
-		return combinedHBox;
+		combinedFloorButtonTextVBox.setAlignment(Pos.CENTER);
+		
+		combinedFloorButtonTextVBox.setSpacing(30);
+
+		combinedFloorButtonTextVBox.getChildren().addAll(currentFloorText, combinedHBox);
+		
+		String cssLayout = "-fx-padding: 10;" + 
+                "-fx-border-style: solid inside;" + 
+                "-fx-border-width: 5;" +
+                "-fx-border-insets: 5;" + 
+                "-fx-border-radius: 5;" + 
+                "-fx-border-color: black;";
+		
+		combinedFloorButtonTextVBox.setStyle(cssLayout);;
+		
+		return combinedFloorButtonTextVBox;
 	}
 
 	public void resetButton(String floorNum, String color)

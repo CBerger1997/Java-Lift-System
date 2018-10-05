@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 
 public class Initialiser extends Application
 {
-	LiftManager liftManager = new LiftManager(3);
+	LiftManager liftManager = new LiftManager(3, 10);
 
 	public static void main(String[] args)
 	{

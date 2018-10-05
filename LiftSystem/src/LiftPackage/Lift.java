@@ -8,11 +8,11 @@ public class Lift extends Thread
 	private Integer floor;
 	private boolean moving = false;
 	private boolean isUp = false;
-	private ArrayList<Integer> upQueue = new ArrayList<Integer>();
-	private ArrayList<Integer> downQueue = new ArrayList<Integer>();
 	private boolean runFlag = true;
 	private LiftGUI liftGUI;
 	private Integer prevFloor;
+	private ArrayList<Integer> upQueue = new ArrayList<Integer>();
+	private ArrayList<Integer> downQueue = new ArrayList<Integer>();
 
 	public Lift()
 	{
@@ -33,7 +33,7 @@ public class Lift extends Thread
 				{
 					if (upQueue.size() > 0)
 					{
-						sleepyTime();
+						threadSleep(500);
 
 						prevFloor = floor;
 
@@ -44,6 +44,7 @@ public class Lift extends Thread
 						if (upQueue.size() > 0 && floor == upQueue.get(0))
 						{
 							removeFloorFromQueue(floor);
+							threadSleep(2141);
 						} 
 						else
 						{
@@ -64,7 +65,7 @@ public class Lift extends Thread
 				{
 					if (downQueue.size() > 0)
 					{
-						sleepyTime();
+						threadSleep(500);
 
 						prevFloor = floor;
 
@@ -75,6 +76,7 @@ public class Lift extends Thread
 						if (downQueue.size() > 0 && floor == downQueue.get(0))
 						{
 							removeFloorFromQueue(floor);
+							threadSleep(2141);
 						} 
 						else
 						{
@@ -90,6 +92,7 @@ public class Lift extends Thread
 			}
 			else
 			{
+				//TODO fix this, not sure why but doesn't work without some sort of system output
 				System.err.println("");
 				
 				if (upQueue.size() > 0)
@@ -108,11 +111,11 @@ public class Lift extends Thread
 		}
 	}
 	
-	public void sleepyTime()
+	public void threadSleep(int time)
 	{
 		try
 		{
-			Thread.sleep(2141);
+			Thread.sleep(time);
 		}
 		catch (InterruptedException e)
 		{
@@ -178,7 +181,8 @@ public class Lift extends Thread
 				liftGUI.upQueueTextField.appendText(integer + " ");
 			}
 
-		} else if (floor < this.floor)
+		} 
+		else if (floor < this.floor)
 		{
 			downQueue.add(floor);
 
@@ -192,9 +196,6 @@ public class Lift extends Thread
 			{
 				liftGUI.downQueueTextField.appendText(integer + " ");
 			}
-		} else
-		{
-			// TODO output error that this is the current floor
 		}
 	}
 
@@ -216,10 +217,10 @@ public class Lift extends Thread
 
 			Integer liftFloor = this.floor;
 
-			liftGUI.resetButton(floorNum.toString(), "C0C0C0");
 			liftGUI.resetButton(prevFloor.toString(), "C0C0C0");
 			liftGUI.resetButton(liftFloor.toString(), "90EE90");
-		} else if (downQueue.contains(floorNum))
+		} 
+		else if (downQueue.contains(floorNum))
 		{
 			downQueue.remove(floorNum);
 
@@ -234,13 +235,8 @@ public class Lift extends Thread
 			}
 			Integer liftFloor = this.floor;
 
-			liftGUI.resetButton(floorNum.toString(), "C0C0C0");
 			liftGUI.resetButton(prevFloor.toString(), "C0C0C0");
 			liftGUI.resetButton(liftFloor.toString(), "90EE90");
-
-		} else
-		{
-			// TODO output error that this is the current floor
 		}
 	}
 

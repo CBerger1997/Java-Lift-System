@@ -2,20 +2,29 @@ package LiftPackage;
 
 import java.util.ArrayList;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.layout.HBox;
 
 public class LiftManager
 {
-	ArrayList<Lift>lifts = new ArrayList<Lift>();
+	public static ArrayList<Lift> lifts = new ArrayList<Lift>();
+	ArrayList<Floor> floors = new ArrayList<Floor>();
+	FloorGUI floorGUI;
 	
-	public LiftManager(int numOfLIfts)
+	public LiftManager(int numOfLIfts, int numOfFloors)
 	{
+		floorGUI = new FloorGUI(numOfFloors);
+		
 		for(int i = 0; i < numOfLIfts; i++)
 		{
 			Lift lift = new Lift();
 			lifts.add(lift);
+		}
+		for(int i = 1; i <= numOfFloors; i++)
+		{
+			Floor floor = new Floor(i);
+			floors.add(floor);
 		}
 		
 		for (Lift lift : lifts)
@@ -34,22 +43,21 @@ public class LiftManager
 	
 	public Scene LiftGuiBuilder()
 	{
-		TabPane liftTabPane = new TabPane();
+		//TabPane liftTabPane = new TabPane();
 
 		int count = 1;
 		
+		HBox combinedGUIs = new HBox();
+		combinedGUIs.setSpacing(80);
+		combinedGUIs.setAlignment(Pos.CENTER);
+		combinedGUIs.getChildren().add(floorGUI.SetupGUI());
+		
 		for (Lift lift : lifts)
 		{
-			Tab tab = new Tab();
-			tab.setClosable(false);
-			tab.setText("Lift: " + count);
-			tab.setContent(lift.getLiftGUI().SetupGUI());
-			liftTabPane.getTabs().add(tab);
-			
-			count++;
+			combinedGUIs.getChildren().add(lift.getLiftGUI().SetupGUI());
 		}
 		
-		Scene scene = new Scene(liftTabPane, 700, 700);
+		Scene scene = new Scene(combinedGUIs, 1900, 600);
 
 		return scene;
 	}
