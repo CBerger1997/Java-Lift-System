@@ -107,8 +107,7 @@ public class Lift extends Thread
 			}
 			else
 			{
-				//TODO fix this, not sure why but doesn't work without some sort of system output
-				System.err.println("");
+				threadSleep(500);
 				
 				if (upQueue.size() > 0)
 				{

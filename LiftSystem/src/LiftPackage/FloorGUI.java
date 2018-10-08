@@ -111,66 +111,85 @@ public class FloorGUI
 			{
 				return;
 			}
-			else
+			else if(btn.isUp && (lift.getIsUp() || lift.getIsMoving() == false && lift.getFloor() < btn.floorNum))
+			{
+				liftCheck.add(lift);
+			}
+			else if(!btn.isUp && (!lift.getIsUp() || lift.getIsMoving() == false && lift.getFloor() > btn.floorNum))
 			{
 				liftCheck.add(lift);
 			}
 		}
-		
-		boolean closeCheck = false;
-		
-		for(Lift lift : liftCheck)
+						
+		if(btn.isUp)
 		{
-			if(lift.getIsUp() == true && btn.isUp == true || btn.isUp == true && lift.getIsMoving() == false && lift.getFloor() < btn.floorNum)
+			UpButtonChecks(liftCheck, btn);
+		}
+		else
+		{
+			DownButtonChecks(liftCheck, btn);
+		}
+	}
+	
+	public void UpButtonChecks(ArrayList<Lift> lifts, FloorButton btn)
+	{
+		ArrayList<Integer> floorDistances = new ArrayList<Integer>();
+		
+		for(int i = 0; i < lifts.size(); i++)
+		{
+			floorDistances.add(Math.abs(btn.floorNum - lifts.get(i).getFloor()));
+		}
+		
+		Integer smallestDist = 100;
+		int distIndex = 0;
+		
+		for (int i = 0; i < floorDistances.size(); i++)
+		{
+			if(floorDistances.get(i) < smallestDist)
 			{
-				closeCheck = UpButtonChecks(lift, btn);
+				smallestDist = floorDistances.get(i);
+				distIndex = i;
 			}
-			else if(lift.getIsUp() == false && btn.isUp == false || btn.isUp == false && lift.getIsMoving() == false && lift.getFloor() > btn.floorNum)
-			{
-				closeCheck = DownButtonChecks(lift, btn);
-			}			
-			if(closeCheck)
-			{
+		}
+		
+		for(int i = 0; i < LiftManager.lifts.size(); i++)
+		{
+			if(lifts.get(distIndex).equals(LiftManager.lifts.get(i)))
+			{				
+				LiftManager.lifts.get(i).addNewFloorToQueue(btn.floorNum);
 				return;
 			}
 		}
 	}
 	
-	public boolean UpButtonChecks(Lift lift, FloorButton btn)
-	{
-		if((lift.getFloor() == (btn.floorNum - 1)))
-		{
-			for(int i = 0; i < LiftManager.lifts.size(); i++)
-			{
-				if(lift == LiftManager.lifts.get(i))
-				{
-					LiftManager.lifts.get(i).addNewFloorToQueue(btn.floorNum);
-					return true;
-				}
-			}
-		}
-		//else if()
-		//{
-			
-		//}
+	public void DownButtonChecks(ArrayList<Lift> lifts, FloorButton btn)
+	{	
+		ArrayList<Integer> floorDistances = new ArrayList<Integer>();
 		
-		return false;		
-	}
-	
-	public boolean DownButtonChecks(Lift lift, FloorButton btn)
-	{
-		if((lift.getFloor() == (btn.floorNum + 1)))
+		for(Lift lift : lifts)
 		{
-			for(int i = 0; i < LiftManager.lifts.size(); i++)
+			floorDistances.add(Math.abs(lift.getFloor() - btn.floorNum));
+		}
+		
+		Integer smallestDist = 100;
+		int distIndex = 0;
+		
+		for (int i = 0; i < floorDistances.size(); i++)
+		{
+			if(floorDistances.get(i) < smallestDist)
 			{
-				if(lift.equals(LiftManager.lifts.get(i)))
-				{
-					LiftManager.lifts.get(i).addNewFloorToQueue(btn.floorNum);
-					return true;
-				}
+				smallestDist = floorDistances.get(i);
+				distIndex = i;
 			}
 		}
-
-		return false;
+		
+		for(int i = 0; i < LiftManager.lifts.size(); i++)
+		{
+			if(lifts.get(distIndex).equals(LiftManager.lifts.get(i)))
+			{				
+				LiftManager.lifts.get(i).addNewFloorToQueue(btn.floorNum);
+				return;
+			}
+		}
 	}
 }
