@@ -1,7 +1,6 @@
 package LiftPackage;
 
 import java.util.ArrayList;
-
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
@@ -43,10 +42,6 @@ public class LiftManager
 	
 	public Scene LiftGuiBuilder()
 	{
-		//TabPane liftTabPane = new TabPane();
-
-		int count = 1;
-		
 		HBox combinedGUIs = new HBox();
 		combinedGUIs.setSpacing(80);
 		combinedGUIs.setAlignment(Pos.CENTER);

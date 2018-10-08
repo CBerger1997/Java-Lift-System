@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -30,9 +28,6 @@ public class FloorGUI
 		{
 			FloorButton upBtn = new FloorButton(upArrowImg, true, i);
 			upBtns.add(upBtn);
-
-			//TODO implement this functionality to allow buttons to effect lift queues, 
-			//currently just gets lifts that don't contain specified floor, potentially pointless
 			
 			upBtn.setOnAction(new EventHandler<ActionEvent>()
 			{
@@ -61,28 +56,25 @@ public class FloorGUI
 	public HBox SetupGUI()
 	{
 		VBox upBtnsVBox = new VBox();
+		upBtnsVBox.setAlignment(Pos.CENTER);
+		upBtnsVBox.setSpacing(10);
 
 		VBox downBtnsVBox = new VBox();
-		
-		VBox floorTextVBox = new VBox();
-		
-		upBtnsVBox.setAlignment(Pos.CENTER);
 		downBtnsVBox.setAlignment(Pos.CENTER);
-		floorTextVBox.setAlignment(Pos.CENTER);
-		upBtnsVBox.setSpacing(10);
 		downBtnsVBox.setSpacing(10);
+
+		VBox floorTextVBox = new VBox();
+		floorTextVBox.setAlignment(Pos.CENTER);
 		floorTextVBox.setSpacing(34);
-
-		for (FloorButton button : upBtns)
-		{
-			upBtnsVBox.getChildren().add(button);
-		}
-
-		for (FloorButton button : downBtns)
-		{
-			downBtnsVBox.getChildren().add(button);
-		}
 		
+		HBox combinedHBox = new HBox();
+		combinedHBox.setAlignment(Pos.CENTER);
+		combinedHBox.setSpacing(10);
+		
+		upBtnsVBox.getChildren().addAll(upBtns);
+
+		downBtnsVBox.getChildren().addAll(downBtns);
+				
 		for (Integer i = upBtns.size(); i > 0; i--)
 		{
 			Text floorText = new Text();
@@ -90,14 +82,8 @@ public class FloorGUI
 			floorTextVBox.getChildren().add(floorText);
 		}
 
-		HBox combinedHBox = new HBox();
-
 		combinedHBox.getChildren().addAll(upBtnsVBox, downBtnsVBox, floorTextVBox);
-
-		combinedHBox.setSpacing(10);
 		
-		combinedHBox.setAlignment(Pos.CENTER);
-
 		return combinedHBox;
 	}
 	
