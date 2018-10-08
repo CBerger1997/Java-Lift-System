@@ -44,7 +44,8 @@ public class LiftGUI
 					Integer floorNum = lift.getFloor();
 					for (RadioButton button : floorRadioBtns)
 					{
-						if (!btn.getText().equals(floorNum.toString()) && btn.getText().equals(button.getText()) && !lift.getUpQueue().contains(btn.getText()))
+						if (!btn.getText().equals(floorNum.toString()) && btn.getText().equals(button.getText()) 
+							&& !lift.getUpQueue().contains(btn.getText()) && !lift.getDownQueue().contains(btn.getText()))
 						{
 							if (button.isSelected())
 							{

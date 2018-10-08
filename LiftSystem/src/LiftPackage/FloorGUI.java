@@ -34,7 +34,7 @@ public class FloorGUI
 			//TODO implement this functionality to allow buttons to effect lift queues, 
 			//currently just gets lifts that don't contain specified floor, potentially pointless
 			
-			upBtn.floorBtn.setOnAction(new EventHandler<ActionEvent>()
+			upBtn.setOnAction(new EventHandler<ActionEvent>()
 			{
 				public void handle(ActionEvent e)
 				{
@@ -48,7 +48,7 @@ public class FloorGUI
 			FloorButton downBtn = new FloorButton(downArrowImg, false, i);
 			downBtns.add(downBtn);
 			
-			downBtn.floorBtn.setOnAction(new EventHandler<ActionEvent>()
+			downBtn.setOnAction(new EventHandler<ActionEvent>()
 			{
 				public void handle(ActionEvent e)
 				{
@@ -75,12 +75,12 @@ public class FloorGUI
 
 		for (FloorButton button : upBtns)
 		{
-			upBtnsVBox.getChildren().add(button.floorBtn);
+			upBtnsVBox.getChildren().add(button);
 		}
 
 		for (FloorButton button : downBtns)
 		{
-			downBtnsVBox.getChildren().add(button.floorBtn);
+			downBtnsVBox.getChildren().add(button);
 		}
 		
 		for (Integer i = upBtns.size(); i > 0; i--)
