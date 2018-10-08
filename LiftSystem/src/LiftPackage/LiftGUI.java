@@ -48,7 +48,7 @@ public class LiftGUI
 								button.setSelected(false);
 								btn.setStyle("-fx-background-color:#C0C0C0");
 								lift.removeFloorFromQueue(Integer.valueOf(button.getText()));
-							} 
+							}
 							else
 							{
 								button.setSelected(true);

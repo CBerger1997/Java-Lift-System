@@ -29,65 +29,80 @@ public class Lift extends Thread
 		{
 			if (moving == true && isUp == true)
 			{
-				for (int i = floor + 1; i < 11; i++)
+				if (upQueue.size() > 0)
 				{
-					if (upQueue.size() > 0)
+					for (int i = floor + 1; i < 11; i++)
 					{
-						threadSleep(500);
-
-						prevFloor = floor;
-
-						floor = i;
-
-						setMovementGUI();
-
-						if (upQueue.size() > 0 && floor == upQueue.get(0))
+						if (upQueue.size() > 0)
 						{
-							removeFloorFromQueue(floor);
-							threadSleep(2141);
-						} 
+							threadSleep(500);
+	
+							prevFloor = floor;
+	
+							floor = i;
+	
+							setMovementGUI();
+	
+							if (upQueue.size() > 0 && floor == upQueue.get(0))
+							{
+								removeFloorFromQueue(floor);
+								threadSleep(2141);
+							} 
+							else
+							{
+								moving = false;
+								liftGUI.isMovingText.setText("false");
+							}
+						}
 						else
 						{
-							moving = false;
-							liftGUI.isMovingText.setText("false");
+							continue;
 						}
 					}
-					else
-					{
-						continue;
-					}
-
+				}
+				else
+				{
+					moving = false;
+					liftGUI.isMovingText.setText("false");
 				}
 			}
 			else if (moving == true && isUp == false)
 			{
-				for (int i = floor - 1; i > 0; i--)
+				if (downQueue.size() > 0)
 				{
-					if (downQueue.size() > 0)
+					for (int i = floor - 1; i > 0; i--)
 					{
-						threadSleep(500);
-
-						prevFloor = floor;
-
-						floor = i;
-
-						setMovementGUI();
-
-						if (downQueue.size() > 0 && floor == downQueue.get(0))
+						if (downQueue.size() > 0)
 						{
-							removeFloorFromQueue(floor);
-							threadSleep(2141);
+							threadSleep(500);
+	
+							prevFloor = floor;
+	
+							floor = i;
+	
+							setMovementGUI();
+	
+							if (downQueue.size() > 0 && floor == downQueue.get(0))
+							{
+								removeFloorFromQueue(floor);
+								threadSleep(2141);
+							} 
+							else
+							{
+								moving = false;
+								liftGUI.isMovingText.setText("false");
+							}
 						} 
 						else
 						{
-							moving = false;
-							liftGUI.isMovingText.setText("false");
+							continue;
 						}
-					} 
-					else
-					{
-						continue;
 					}
+				}
+				else
+				{
+					moving = false;
+					liftGUI.isMovingText.setText("false");
 				}
 			}
 			else

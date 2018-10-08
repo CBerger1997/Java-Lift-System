@@ -19,8 +19,8 @@ public class FloorGUI
 	Image downArrowImg = new Image(getClass().getResourceAsStream("DownArrow.jpg"));
 	Image upArrowImg = new Image(getClass().getResourceAsStream("UpArrow.jpg"));
 	
-	public ArrayList<Button> upBtns = new ArrayList<Button>();
-	public ArrayList<Button> downBtns = new ArrayList<Button>();
+	public ArrayList<FloorButton> upBtns = new ArrayList<FloorButton>();
+	public ArrayList<FloorButton> downBtns = new ArrayList<FloorButton>();
 	public TextField downQueueTextField = new TextField();
 	public TextField upQueueTextField = new TextField();
 
@@ -28,45 +28,33 @@ public class FloorGUI
 	{
 		for (int i = numOfFloors; i > 0; i--)
 		{
-			Button btn = new Button();
-			btn.setPrefSize(40, 40);
-			btn.setGraphic(new ImageView(upArrowImg));
-			upBtns.add(btn);
+			FloorButton upBtn = new FloorButton(upArrowImg, true, i);
+			upBtns.add(upBtn);
 
 			//TODO implement this functionality to allow buttons to effect lift queues, 
 			//currently just gets lifts that don't contain specified floor, potentially pointless
 			
-			btn.setOnAction(new EventHandler<ActionEvent>()
+			upBtn.floorBtn.setOnAction(new EventHandler<ActionEvent>()
 			{
 				public void handle(ActionEvent e)
 				{
-					ArrayList<Lift> liftCheck = new ArrayList<Lift>();
-					
-					for(Lift lift : LiftManager.lifts)
-					{
-						if(!lift.getUpQueue().contains(btn.getText()))
-						{
-							liftCheck.add(lift);
-						}
-						else
-						{
-							liftCheck.add(lift);	
-						}
-					}
-					for(int i = 0; i < liftCheck.size(); i++)
-					{
-						
-					}
-				}	
+					LiftQueueUpdate(upBtn);
+				}
 			});
 		}
 
 		for (int i = numOfFloors; i > 0; i--)
 		{
-			Button btn = new Button();
-			btn.setPrefSize(40, 40);
-			btn.setGraphic(new ImageView(downArrowImg));
-			downBtns.add(btn);
+			FloorButton downBtn = new FloorButton(downArrowImg, false, i);
+			downBtns.add(downBtn);
+			
+			downBtn.floorBtn.setOnAction(new EventHandler<ActionEvent>()
+			{
+				public void handle(ActionEvent e)
+				{
+					LiftQueueUpdate(downBtn);
+				}
+			});
 		}
 	}
 
@@ -85,14 +73,14 @@ public class FloorGUI
 		downBtnsVBox.setSpacing(10);
 		floorTextVBox.setSpacing(34);
 
-		for (Button button : upBtns)
+		for (FloorButton button : upBtns)
 		{
-			upBtnsVBox.getChildren().add(button);
+			upBtnsVBox.getChildren().add(button.floorBtn);
 		}
 
-		for (Button button : downBtns)
+		for (FloorButton button : downBtns)
 		{
-			downBtnsVBox.getChildren().add(button);
+			downBtnsVBox.getChildren().add(button.floorBtn);
 		}
 		
 		for (Integer i = upBtns.size(); i > 0; i--)
@@ -112,24 +100,77 @@ public class FloorGUI
 
 		return combinedHBox;
 	}
-
-	//TODO implement this functionality
 	
-	/*public void resetButton(String floorNum, String color)
+	public void LiftQueueUpdate(FloorButton btn)
 	{
-		for (Button btn : floorBtns)
+		ArrayList<Lift> liftCheck = new ArrayList<Lift>();
+		
+		for(Lift lift : LiftManager.lifts)
 		{
-			if (btn.getText().equals(floorNum))
+			if(lift.getUpQueue().contains(btn.floorNum) || lift.getDownQueue().contains(btn.floorNum) || lift.getFloor() == btn.floorNum && lift.getIsUp() == btn.isUp)
 			{
-				for (RadioButton button : floorRadioBtns)
+				return;
+			}
+			else
+			{
+				liftCheck.add(lift);
+			}
+		}
+		
+		boolean closeCheck = false;
+		
+		for(Lift lift : liftCheck)
+		{
+			if(lift.getIsUp() == true && btn.isUp == true || btn.isUp == true && lift.getIsMoving() == false && lift.getFloor() < btn.floorNum)
+			{
+				closeCheck = UpButtonChecks(lift, btn);
+			}
+			else if(lift.getIsUp() == false && btn.isUp == false || btn.isUp == false && lift.getIsMoving() == false && lift.getFloor() > btn.floorNum)
+			{
+				closeCheck = DownButtonChecks(lift, btn);
+			}			
+			if(closeCheck)
+			{
+				return;
+			}
+		}
+	}
+	
+	public boolean UpButtonChecks(Lift lift, FloorButton btn)
+	{
+		if((lift.getFloor() == (btn.floorNum - 1)))
+		{
+			for(int i = 0; i < LiftManager.lifts.size(); i++)
+			{
+				if(lift == LiftManager.lifts.get(i))
 				{
-					if (btn.getText().equals(button.getText()))
-					{
-						button.setSelected(false);
-						btn.setStyle("-fx-background-color:#" + color);
-					}
+					LiftManager.lifts.get(i).addNewFloorToQueue(btn.floorNum);
+					return true;
 				}
 			}
 		}
-	}*/
+		//else if()
+		//{
+			
+		//}
+		
+		return false;		
+	}
+	
+	public boolean DownButtonChecks(Lift lift, FloorButton btn)
+	{
+		if((lift.getFloor() == (btn.floorNum + 1)))
+		{
+			for(int i = 0; i < LiftManager.lifts.size(); i++)
+			{
+				if(lift.equals(LiftManager.lifts.get(i)))
+				{
+					LiftManager.lifts.get(i).addNewFloorToQueue(btn.floorNum);
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 }
