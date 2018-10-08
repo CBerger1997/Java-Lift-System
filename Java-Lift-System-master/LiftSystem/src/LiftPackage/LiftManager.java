@@ -20,7 +20,7 @@ public class LiftManager
 			Lift lift = new Lift();
 			lifts.add(lift);
 		}
-		for(int i = 1; i <= numOfFloors; i++)
+		for(int i = 0; i <= numOfFloors; i++)
 		{
 			Floor floor = new Floor(i);
 			floors.add(floor);

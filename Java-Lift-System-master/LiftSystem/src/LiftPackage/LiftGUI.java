@@ -28,7 +28,7 @@ public class LiftGUI
 		upQueueTextField.setEditable(false);
 		downQueueTextField.setEditable(false);
 
-		for (int i = 10; i > 0; i--)
+		for (int i = 10; i >= 0; i--)
 		{
 			Integer nameInt = i;
 			Button btn = new Button(nameInt.toString());
@@ -62,9 +62,14 @@ public class LiftGUI
 					}
 				}
 			});
+			
+			if(i == 0)
+			{
+				btn.setStyle("-fx-background-color:#90EE90");
+			}
 		}
 
-		for (int i = 10; i > 0; i--)
+		for (int i = 10; i >= 0; i--)
 		{
 			Integer nameInt = i;
 			RadioButton btn = new RadioButton();
@@ -72,6 +77,11 @@ public class LiftGUI
 			btn.setPrefSize(40, 40);
 			btn.setDisable(true);
 			floorRadioBtns.add(btn);
+			
+			if(i == 0)
+			{
+				btn.setSelected(true);
+			}
 		}
 
 		lift.setFloor(0);

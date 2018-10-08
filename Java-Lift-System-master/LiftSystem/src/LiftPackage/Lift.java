@@ -70,7 +70,7 @@ public class Lift extends Thread
 			{
 				if (downQueue.size() > 0)
 				{
-					for (int i = floor - 1; i > 0; i--)
+					for (int i = floor - 1; i >= 0; i--)
 					{
 						if (downQueue.size() > 0)
 						{
