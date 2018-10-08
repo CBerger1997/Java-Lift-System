@@ -155,7 +155,7 @@ public class FloorGUI
 		for(int i = 0; i < LiftManager.lifts.size(); i++)
 		{
 			if(lifts.get(distIndex).equals(LiftManager.lifts.get(i)))
-			{				
+			{
 				LiftManager.lifts.get(i).addNewFloorToQueue(btn.floorNum);
 				return;
 			}

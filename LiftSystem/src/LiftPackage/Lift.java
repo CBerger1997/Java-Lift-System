@@ -27,6 +27,8 @@ public class Lift extends Thread
 	{
 		while (runFlag)
 		{
+			liftGUI.isMovingText.setText(moving ? "Yes" : "No");
+			
 			if (moving == true && isUp == true)
 			{
 				if (upQueue.size() > 0)
@@ -51,7 +53,6 @@ public class Lift extends Thread
 							else
 							{
 								moving = false;
-								liftGUI.isMovingText.setText("false");
 							}
 						}
 						else
@@ -63,7 +64,6 @@ public class Lift extends Thread
 				else
 				{
 					moving = false;
-					liftGUI.isMovingText.setText("false");
 				}
 			}
 			else if (moving == true && isUp == false)
@@ -90,7 +90,6 @@ public class Lift extends Thread
 							else
 							{
 								moving = false;
-								liftGUI.isMovingText.setText("false");
 							}
 						} 
 						else
@@ -102,7 +101,6 @@ public class Lift extends Thread
 				else
 				{
 					moving = false;
-					liftGUI.isMovingText.setText("false");
 				}
 			}
 			else

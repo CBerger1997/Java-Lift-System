@@ -26,6 +26,9 @@ public class LiftGUI
 
 	public LiftGUI(Lift lift)
 	{
+		upQueueTextField.setEditable(false);
+		downQueueTextField.setEditable(false);
+
 		for (int i = 10; i > 0; i--)
 		{
 			Integer nameInt = i;
