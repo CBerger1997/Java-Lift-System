@@ -124,9 +124,10 @@ public class FloorGUI
 	{
 		ArrayList<Integer> floorDistances = new ArrayList<Integer>();
 
-		for (int i = 0; i < lifts.size(); i++)
+		for (Lift lift : lifts)
 		{
-			floorDistances.add(Math.abs(btn.floorNum - lifts.get(i).getFloor()));
+			floorDistances.add(Math.abs(btn.floorNum - lift.getFloor()));
+			System.err.println("Floor Distance: " + Math.abs(lift.getFloor() - btn.floorNum));
 		}
 
 		Integer smallestDist = 100;
@@ -138,6 +139,9 @@ public class FloorGUI
 			{
 				smallestDist = floorDistances.get(i);
 				distIndex = i;
+				
+				System.err.println("Smallest Distance: " + smallestDist);
+				System.err.println("Smallest Distance Index: " + distIndex);
 			}
 		}
 
@@ -158,6 +162,7 @@ public class FloorGUI
 		for (Lift lift : lifts)
 		{
 			floorDistances.add(Math.abs(lift.getFloor() - btn.floorNum));
+			System.err.println("Floor Distance: " + Math.abs(lift.getFloor() - btn.floorNum));
 		}
 
 		Integer smallestDist = 100;
@@ -169,6 +174,10 @@ public class FloorGUI
 			{
 				smallestDist = floorDistances.get(i);
 				distIndex = i;
+				
+				System.err.println("Smallest Distance: " + smallestDist);
+				System.err.println("Smallest Distance Index: " + distIndex);
+
 			}
 		}
 

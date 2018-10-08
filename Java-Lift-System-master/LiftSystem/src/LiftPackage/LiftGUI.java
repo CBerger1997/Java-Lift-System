@@ -28,7 +28,7 @@ public class LiftGUI
 		upQueueTextField.setEditable(false);
 		downQueueTextField.setEditable(false);
 
-		for (int i = 10; i >= 0; i--)
+		for (int i = LiftManager.floors.size() - 1; i >= 0; i--)
 		{
 			Integer nameInt = i;
 			Button btn = new Button(nameInt.toString());
@@ -69,7 +69,7 @@ public class LiftGUI
 			}
 		}
 
-		for (int i = 10; i >= 0; i--)
+		for (int i = LiftManager.floors.size() - 1; i >= 0; i--)
 		{
 			Integer nameInt = i;
 			RadioButton btn = new RadioButton();

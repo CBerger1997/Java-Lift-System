@@ -33,7 +33,7 @@ public class Lift extends Thread
 			{
 				if (upQueue.size() > 0)
 				{
-					for (int i = floor + 1; i < 11; i++)
+					for (int i = floor + 1; i < LiftManager.floors.size(); i++)
 					{
 						if (upQueue.size() > 0)
 						{

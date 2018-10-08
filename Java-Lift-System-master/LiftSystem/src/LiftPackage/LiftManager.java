@@ -8,24 +8,25 @@ import javafx.scene.layout.HBox;
 public class LiftManager
 {
 	public static ArrayList<Lift> lifts = new ArrayList<Lift>();
-	ArrayList<Floor> floors = new ArrayList<Floor>();
+	public static ArrayList<Floor> floors = new ArrayList<Floor>();
 	FloorGUI floorGUI;
 	
 	public LiftManager(int numOfLIfts, int numOfFloors)
 	{
 		floorGUI = new FloorGUI(numOfFloors);
 		
-		for(int i = 0; i < numOfLIfts; i++)
-		{
-			Lift lift = new Lift();
-			lifts.add(lift);
-		}
 		for(int i = 0; i <= numOfFloors; i++)
 		{
 			Floor floor = new Floor(i);
 			floors.add(floor);
 		}
 		
+		for(int i = 0; i < numOfLIfts; i++)
+		{
+			Lift lift = new Lift();
+			lifts.add(lift);
+		}
+				
 		for (Lift lift : lifts)
 		{
 			lift.start();
